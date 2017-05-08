@@ -26,7 +26,7 @@ func main() {
 	var (
 		versionString = fmt.Sprintf("%s %s (%s)", applicationName, revision, runtime.Version())
 		showVersion   = flag.Bool("version", false, "Print version information.")
-		listenAddress = flag.String("web.listen-address", ":9249", "Address to listen on for web interface and telemetry.")
+		listenAddress = flag.String("web.listen-address", ":9250", "Address to listen on for web interface and telemetry.")
 		metricsPath   = flag.String("web.telemetry-path", "/metrics", "Path under which to expose metrics.")
 		url           = flag.String("opentsdb.url", "http://localhost:4242", "HTTP URL for OpenTSDB server to monitor.")
 		timeout       = flag.Duration("opentsdb.timeout", 5*time.Second, "Timeout for HTTP requests to OpenTSDB.")
