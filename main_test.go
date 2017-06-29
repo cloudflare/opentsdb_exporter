@@ -38,7 +38,7 @@ func TestHappyPath(t *testing.T) {
 	}))
 	defer ts.Close()
 
-	e := newExporter(ts.URL, 5*time.Second)
+	e := &collector{target: ts.URL, timeout: 5 * time.Second}
 	ch := make(chan prometheus.Metric)
 	go e.Collect(ch)
 
