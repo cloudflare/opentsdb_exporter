@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"errors"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -90,14 +91,14 @@ func (c *collector) Collect(ch chan<- prometheus.Metric) {
 	metrics, err := c.queryOpenTSDB()
 	if err != nil {
 		log.Errorf("Error scraping target %s: %s", c.target, err)
-		ch <- prometheus.NewInvalidMetric(prometheus.NewDesc("api_error", "Error scraping target", nil, nil), err)
+		ch <- prometheus.NewInvalidMetric(prometheus.NewDesc("api_error", "", nil, nil), errors.New("Error scraping target, check exporter logs"))
 		return
 	}
 	for _, m := range *metrics {
 		value, err := m.Value.Float64()
 		if err != nil {
 			log.Errorf("Error scraping target %s: %s", c.target, err)
-			ch <- prometheus.NewInvalidMetric(prometheus.NewDesc("api_error", "Error scraping target", nil, nil), err)
+			ch <- prometheus.NewInvalidMetric(prometheus.NewDesc("api_error", "", nil, nil), errors.New("Error scraping target, check exporter logs"))
 			return
 		}
 
