@@ -1,0 +1,15 @@
+scrape_configs:
+  - job_name: 'opentsdb'
+    static_configs:
+      - targets:
+        - 192.168.1.2:4242  # opentsdb url
+    metrics_path: /snmp
+    params:
+      module: []
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+      - source_labels: [__param_target]
+        target_label: instance
+      - target_label: __address__
+        replacement: 127.0.0.1:9250  # The opentsdb exporter's real hostname:port
